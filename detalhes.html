@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- Icone do Site-->
+    <link rel="icon" class="icon" type="icon"
+        href="https://varejointeligente.cdlbh.com.br/wp-content/uploads/2020/01/logo-puc-minas.png">
+    <!-- FONT-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <!-- Fontawesome 6.1.1 - 04/2022 -->
+    <script src="https://kit.fontawesome.com/885a903cae.js" crossorigin="anonymous"></script>
+    <!-- CSS-->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- HEADER-->
+    <header class="header-fix">
+
+        <div class="container-fluid header">
+            <section class="row">
+                <div id="header_logo" class="col-xl-3 col-md-1 col-md-1 col-sm-10">
+                    <a href="index.html" class="fa-solid fa-otter icon_logo"></a>
+                </div>
+
+                <div id="header_nav" class="col-xl-6 col-lg-11 col-md-11 col-sm-2">
+                    <nav class="nav nav-pills flex-column flex-sm-row">
+                        <input type="checkbox" id="menuToggle">
+                        <label for="menuToggle" class="menu-icon">
+                            <i class="fa fa-bars"></i>
+                            <i class="fa fa-times-circle"></i>
+                        </label>
+                        <ul class="menu">
+                            <li><a class="flex-sm-fill text-sm-center nav-link liheader"
+                                    href="index.html"><b>HOME</b></a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div id="header_shearch" class="col-xl-3 col-lg-12">
+                    <form class="d-flex" id="formulario">
+                        <input id="search" class="form-control me-2" type="search" placeholder="Search"
+                            aria-label="Search" autocomplete="off">
+                        <button id="btSch" class="btn btn-outline-success icon_search" type="submit"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+                <!--Seearch Bar-->
+                <script>
+                    var sc = document.getElementById("formulario");
+                    sc.onsubmit = (event) => {
+                        event.preventDefault();
+                        var typed = document.getElementById("search").value;
+                        console.log(typed);
+                        location.href = `pesquisa.html?query=${typed}`;
+                    }
+                </script>
+            </section>
+        </div>
+    </header>
+    <!-- MAIN-->
+    <main>
+        <div class="container-fluid">
+
+            <div id="divSeeMore" class="row">
+
+            </div>
+            <div id="suggestions" class="row">
+
+            </div>
+        </div>
+    </main>
+    <!-- JS-->
+    <script>
+        const params = new URLSearchParams(location.search);
+        let id = params.get('id');
+        movieData = JSON.parse(localStorage.getItem('db-moviesNP'));
+        let idxFilme = movieData.results.findIndex((elem) => elem.id == id);
+
+        //FILME ENCONTRADO DETALHES:
+        if (idxFilme > -1) {
+            let filme = movieData.results[idxFilme];
+            document.getElementById('divSeeMore').innerHTML = `
+                <div class="card-Det col-md-5 col-sm-12">
+                        <img src="https://image.tmdb.org/t/p/w500/${filme.poster_path}" class="card-img-top-det" alt="Filme XPTO">
+                </div>
+                <div class="detalhe-info col-md-7 col-sm-12">
+                    <h2><b>${filme.title}</b></h2>
+                    <p class="card-text-det">Sinopse: ${filme.overview}</p>
+                    <h5>Lançado:  <b>${filme.release_date}</h5>
+                    <h5>Score:  <b>${filme.vote_average}/10</b></h5>
+                    <h5>Popularidade:  <b>${filme.popularity}</b></h5>
+                </div>
+            `;
+        }
+        else {
+            movieData = JSON.parse(localStorage.getItem('db-moviesP'));
+            let idxFilme = movieData.results.findIndex((elem) => elem.id == id);
+            if (idxFilme > -1) {
+                let filme = movieData.results[idxFilme];
+                document.getElementById('divSeeMore').innerHTML = `
+                <div class="card-Det col-md-5 col-sm-12">
+                        <img src="https://image.tmdb.org/t/p/w500/${filme.poster_path}" class="card-img-top-det" alt="Filme XPTO">
+                </div>
+                <div class="detalhe-info col-md-7 col-sm-12">
+                    <h2><b>${filme.title}</b></h2>
+                    <p class="card-text-det">Sinopse: ${filme.overview}</p>
+                    <h5>Lançado:  <b>${filme.release_date}</h5>
+                    <h5>Popularidade:  <b>${filme.popularity}</b></h5>
+                    <h5>Score:  <b>${filme.vote_average}/10</b></h5>
+                </div>
+            `;
+            }
+            else {
+                movieData = JSON.parse(localStorage.getItem('db-moviesS'));
+                let idxFilme = movieData.results.findIndex((elem) => elem.id == id);
+                if (idxFilme > -1) {
+                    let filme = movieData.results[idxFilme];
+                    document.getElementById('divSeeMore').innerHTML = `
+                <div class="card-Det col-md-5 col-sm-12">
+                        <img src="https://image.tmdb.org/t/p/w500/${filme.poster_path}" class="card-img-top-det" alt="Filme XPTO">
+                </div>
+                <div class="detalhe-info col-md-7 col-sm-12">
+                    <h2><b>${filme.title}</b></h2>
+                    <p class="card-text-det">Sinopse: ${filme.overview}</p>
+                    <h5>Lançado:  <b>${filme.release_date}</h5>
+                    <h5>Popularidade:  <b>${filme.popularity}</b></h5>
+                    <h5>Score:  <b>${filme.vote_average}/10</b></h5>
+                </div>
+            `;
+                }
+                else {
+                    movieData = JSON.parse(localStorage.getItem('db-moviesL'));
+                    let idxFilme = (movieData.id == id);
+                    if (idxFilme > -1) {
+                        let filme = movieData;
+                        let titleHTMLP = '';
+                        if (filme.poster_path == null) {
+                            titleHTMLP += `
+                                <div class="card-Det-L col-md-5 col-sm-12">
+                                <img src="https://1080motion.com/wp-content/uploads/2018/06/NoImageFound.jpg.png" class="card-img-top-det" alt="Filme XPTO">
+                                </div>`;
+                        }
+                        else {
+                            titleHTMLP += `
+                                <div class="card-Det-L col-md-5 col-sm-12">
+                                <img src="https://image.tmdb.org/t/p/w500/${filme.poster_path}" class="card-img-top-det" alt="Filme XPTO">
+                                </div>`;
+                        }
+                        //No overview
+                        if (filme.overview == "") {
+                            filme.overview = "Sem detalhes sobre esse cadastro"
+                        }
+                        let dataHTML2 = '';
+                        dataHTML2 += `
+                    <div class="detalhe-info col-md-7 col-sm-12">
+                    <h2><b>${filme.title}</b></h2>
+                    <p class="card-text-det">Sinopse: ${filme.overview}</p>
+                    <h5>Lançado:  <b>${filme.release_date}</h5>
+                    <h5>Popularidade:  <b>${filme.popularity}</b></h5>
+                    <h5>Score:  <b>${filme.vote_average}/10</b></h5> </div>
+                    `;
+                        document.getElementById("divSeeMore").innerHTML = titleHTMLP + dataHTML2;
+                        document.getElementById("suggestions").style.height = "350px";
+                    }
+                    //FILME NAO ENCONTRADO;
+                    else {
+                        alert('Filme nao encontrado!!');
+                        document.getElementById('divSeeMore').innerHTML = `
+                        <div class="card-Det-L col-md-5 col-sm-12">
+                        <img src="https://1080motion.com/wp-content/uploads/2018/06/NoImageFound.jpg" class="card-img-top-det" alt="Filme XPTO">
+                    </div>
+                    <div class="detalhe-info col-md-7 col-sm-12">
+                        <h2><b>Nao Encontrado</b></h2>
+                        <p class="card-text-det">Sinopse: Ops! cocorreu um erro, tente novamente mais tarde</p>
+                        <h5>Lançado:  <b>xxxx-xx-xx</h5>
+                        <h5>Popularidade:  <b>xxx</b></h5>
+                        <h5>Score:  <b>x/10</b></h5>
+                    </div>
+                    `;
+                        document.getElementById("suggestions").style.height = "350px";
+                    }
+                }
+            }
+        }
+
+        //SUGESTOES: LISTA MAIS FILMES JA PRESENTES NO LOCAL STORAGE;
+        let title4HTML = '';
+        title4HTML += `
+            <div class="row">
+                <h1 class="section-title col-12"><b>More:</b></h1>
+            </div>
+            `;
+
+        let dataHTML = '';
+        for (let i = 0; i < movieData.results.length; i++) {
+            let filme = movieData.results[i];
+            dataHTML += `
+            <div class="card col-lg-3 col-md-4 col-sm-12">
+                <img src="https://image.tmdb.org/t/p/w500/${filme.poster_path}" class="card-img-top" alt="Filme XPTO">
+                    <div class="card-body">
+                        <h5 class="card-title">${filme.title}</h5>
+                        <p class="card-text">${filme.overview}</p>
+                        <a href="detalhes.html?id=${filme.id}" class="btn btn-primary"><b>Saiba +</b></a>
+                    </div>
+            </div>
+        `;
+        }
+        document.getElementById("suggestions").innerHTML = title4HTML + dataHTML;
+    </script>
+    <!--FOOTER-->
+    <footer id="footer">
+        <div class="container-fluid footer">
+            <section class="row">
+                <div id="footer_info" class="col-8">
+                    &copy;Copyright 2022 - Disciplina de Desenvolvimento de Interfaces Web - <b>ICEI PUC Minas</b>
+                </div>
+
+                <div id="footer_logo" class="col-4">
+                    <a href="https://www.pucminas.br/destaques/Paginas/default.aspx" target="_blank">
+                        <img src="https://varejointeligente.cdlbh.com.br/wp-content/uploads/2020/01/logo-puc-minas.png"
+                            alt="Logo" width="50px" height="50px"></a>
+                </div>
+
+            </section>
+        </div>
+    </footer>
+</body>
+
+</html>
